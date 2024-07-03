@@ -1,6 +1,6 @@
 import { Component } from "react";
-import { Alert, Badge, Button, Carousel, Col, Container, Image, ListGroup, Row } from "react-bootstrap";
-import menu from "../data/menu.json";
+import { Alert, Badge, Button, Carousel, Col, Container, Image, Row } from "react-bootstrap";
+import DishComments from "./DishComments";
 
 class Home extends Component {
   // lo State è una memoria interna ad un componente a Classe
@@ -8,7 +8,7 @@ class Home extends Component {
 
   state = {
     // selectedPasta: null // null permette di fare da argine su un controllo con un ternario / short circuit operator
-    selectedPasta: menu[0]
+    selectedPasta: this.props.menu[0]
   };
 
   componentDidMount() {
@@ -37,7 +37,7 @@ class Home extends Component {
               interval={3000}
               onSlid={slideIndex => {
                 // console.log(slideIndex, menu[slideIndex]);
-                this.setState({ selectedPasta: menu[slideIndex] });
+                this.setState({ selectedPasta: this.props.menu[slideIndex] });
               }}
             >
               {/* abbiamo ciclato l'array menu con il metodo map */}
@@ -49,7 +49,7 @@ class Home extends Component {
             Per un corretto uso del map, avremo bisogno di applicare SEMPRE una prop key sul primo elemento ritornato dal map,
             per evitare che React ricrei l'intera lista nel caso in cui uno degli elementi debba cambiare nel tempo.
             */}
-              {menu.map(plate => {
+              {this.props.menu.map(plate => {
                 // abbiamo ritornato tanti Carousel.Item quanti erano gli elementi dell'array
 
                 // IMPORTANTE:
@@ -90,16 +90,7 @@ class Home extends Component {
             {this.state.selectedPasta ? (
               <>
                 <h4>Recensioni per: {this.state.selectedPasta.name}</h4>
-                <ListGroup className="mb-3">
-                  {this.state.selectedPasta.comments.map((review, index) => (
-                    <ListGroup.Item key={`review-${index}`} className="d-flex justify-content-between align-items-center">
-                      <span>
-                        {review.author} — {review.comment}
-                      </span>
-                      <Badge bg={review.rating > 3 ? "success" : "danger"}>{review.rating}</Badge>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
+                <DishComments selectedPasta={this.state.selectedPasta} />
               </>
             ) : (
               <Alert variant="warning">Seleziona una pasta per leggere le recensioni ☝️</Alert>
