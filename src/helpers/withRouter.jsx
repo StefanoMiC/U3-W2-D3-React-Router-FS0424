@@ -5,6 +5,8 @@ function withRouter(Component) {
     let location = useLocation();
     let navigate = useNavigate();
     let params = useParams();
+
+    Component.displayName = "Component";
     return <Component {...props} router={{ location, navigate, params }} />;
   }
 

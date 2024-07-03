@@ -50,7 +50,7 @@ function App() {
           */}
 
           <Route path="/menu/dettagli/:dishId" element={<PastaDetails menu={menu} />} />
-          <Route path="/class-component/:dynamicId" element={<ClassComponent />} />
+          <Route path="/class-component/:dynamicId" element={<ClassComponent title="Epicode" />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
